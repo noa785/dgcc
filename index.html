@@ -1,13 +1,47 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DGCC Operations Portal</title>
-<style>body{font-family:Segoe UI,Arial,sans-serif;background:#f6f8fc;margin:0} .wrap{max-width:1100px;margin:40px auto;padding:0 16px} h1{margin:0 0 10px} .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))} .tile{display:block;padding:18px;border-radius:16px;background:#fff;border:1px solid #e5e7eb;text-decoration:none;color:#111;box-shadow:0 6px 18px rgba(0,0,0,.05)} .tile h3{margin:0 0 6px} .muted{color:#6b7280;font-size:14px}</style>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DGCC Operations Portal</title>
+  <style>
+    body{font-family:Segoe UI,Arial,sans-serif;background:#f6f8fc;margin:0;color:#111}
+    .wrap{max-width:1100px;margin:40px auto;padding:0 16px}
+    h1{margin:0 0 10px;font-size:42px}
+    .muted{color:#6b7280;font-size:15px}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin-top:18px}
+    .tile{display:block;padding:18px;border-radius:16px;background:#fff;border:1px solid #e5e7eb;text-decoration:none;color:#111;box-shadow:0 6px 18px rgba(0,0,0,.05)}
+    .tile h3{margin:0 0 6px;font-size:22px}
+    .tile:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.08)}
+    :root{color-scheme:light;}
+    .dark{background:#0b1220;color:#e5e7eb}
+    .dark .tile{background:#0f172a;border-color:#1f2937;color:#e5e7eb}
+    .dark .muted{color:#a3aed0}
+  </style>
 </head>
 <body>
+
+  <!-- SETTINGS -->
+  <div id="settings" style="position:fixed;top:14px;right:14px;z-index:50;">
+    <button id="gear" aria-label="Settings"
+      style="border:1px solid #e5e7eb;border-radius:12px;padding:10px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.06);cursor:pointer">
+      ⚙️
+    </button>
+    <div id="menu" hidden
+      style="margin-top:8px;min-width:240px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 12px 28px rgba(0,0,0,.08);padding:8px;">
+      <button id="darkToggle" style="display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px;border-radius:8px;cursor:pointer;">🌙 Toggle dark mode</button>
+      <button id="copyLink"   style="display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px;border-radius:8px;cursor:pointer;">🔗 Copy portal link</button>
+      <a href="https://github.com/noa785/dgcc" target="_blank" rel="noopener"
+         style="display:block;padding:10px;border-radius:8px;text-decoration:none;color:#111;">✏️ Edit portal on GitHub</a>
+      <a href="https://share.streamlit.io/" target="_blank" rel="noopener"
+         style="display:block;padding:10px;border-radius:8px;text-decoration:none;color:#111;">🔐 Streamlit app (secrets/settings)</a>
+    </div>
+  </div>
+
   <div class="wrap">
     <h1>DGCC Operations Portal</h1>
     <p class="muted">Your internal tools in one place</p>
+
     <div class="grid">
       <a class="tile" href="https://dgcc-followup.streamlit.app/" target="_blank" rel="noopener">
         <h3>DGCC Follow-up</h3>
@@ -17,7 +51,19 @@
       <a class="tile" href="#"><h3>Analytics</h3><div class="muted">Coming soon</div></a>
       <a class="tile" href="#"><h3>Reports</h3><div class="muted">Coming soon</div></a>
     </div>
+
     <p class="muted">© DGCC</p>
   </div>
+
+  <script>
+    const gear=document.getElementById('gear');
+    const menu=document.getElementById('menu');
+    const darkBtn=document.getElementById('darkToggle');
+    const copyBtn=document.getElementById('copyLink');
+    gear.addEventListener('click',()=>{menu.hidden=!menu.hidden;});
+    darkBtn.addEventListener('click',()=>{document.body.classList.toggle('dark');menu.hidden=true;});
+    copyBtn.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);copyBtn.textContent='✅ Link copied';setTimeout(()=>copyBtn.textContent='🔗 Copy portal link',1200);}catch{}menu.hidden=true;});
+    document.addEventListener('click',(e)=>{if(!document.getElementById('settings').contains(e.target)) menu.hidden=true;});
+  </script>
 </body>
 </html>
