@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OPD – ODU Portal</title>
-  <!-- Force all links on this page to open in the same tab -->
   <base target="_self">
   <style>
     body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#f7f9fc}
@@ -14,6 +13,9 @@
     .card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.08)}
     .muted{color:#6b7280;font-size:15px}
     a.back{color:#3758f9;text-decoration:none}
+    /* Footer credit */
+    .credit{color:#6b7280;text-decoration:none;border-bottom:1px dotted #cbd5e1}
+    .credit:hover{color:#111;border-bottom-color:#94a3b8}
   </style>
 </head>
 <body>
@@ -43,22 +45,20 @@
       </a>
     </div>
 
-    <p><a class="back" href="../">← Back to DGCC</a></p>
+    <p style="margin-top:22px"><a class="back" href="../">← Back to DGCC</a></p>
+    <p class="muted">© DGCC ·
+      <a class="credit" href="https://github.com/noa785/ODU">GitHub — Created by Nora-Aldossari</a>
+    </p>
   </div>
 
-  <!-- Safety net: strip any leftover target/rel so links always stay in the same tab -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('a.card, a.back').forEach(a => {
-        a.removeAttribute('target');
-        a.removeAttribute('rel');
-        a.addEventListener('click', (e) => {
-          // Normal left click only (Ctrl/Cmd/Middle keeps default browser behavior)
-          if (!e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
-            e.preventDefault();
-            window.location.href = a.href;
-          }
-        });
+    // Same-tab behavior safety net
+    document.querySelectorAll('a.card, a.back').forEach(a => {
+      a.removeAttribute('target'); a.removeAttribute('rel');
+      a.addEventListener('click', e => {
+        if (!e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
+          e.preventDefault(); window.location.href = a.href;
+        }
       });
     });
   </script>
