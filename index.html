@@ -80,5 +80,25 @@
       });
     })();
   </script>
+  <script>
+(function () {
+  const style = document.createElement('style');
+  style.textContent = `
+    .tile{position:relative}
+    .madeby{position:absolute;top:10px;right:12px;font-size:12px;padding:4px 8px;
+      background:#eef2ff;color:#1f2937;border:1px solid #e5e7eb;border-radius:999px}
+    .dark .madeby{background:#1f2937;color:#e5e7eb;border-color:#374151}
+  `;
+  document.head.appendChild(style);
+  document.querySelectorAll('a.tile').forEach(a=>{
+    if(!a.querySelector('.madeby')){
+      const b=document.createElement('span');
+      b.className='madeby';
+      b.textContent='GitHub — Created by Nora-Aldossari';
+      a.appendChild(b);
+    }
+  });
+})();
+</script>
 </body>
 </html>
