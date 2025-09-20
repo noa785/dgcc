@@ -5,54 +5,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DGCC Operations Portal</title>
   <meta name="theme-color" content="#f6f8fc" />
+  <!-- Force all links to open in the same tab -->
   <base target="_self">
   <style>
     :root { color-scheme: light; }
     * { box-sizing: border-box; }
     body { font-family: Segoe UI, Arial, sans-serif; background:#f6f8fc; margin:0; color:#111; }
+
+    /* Layout */
     .wrap { max-width:1100px; margin:40px auto; padding:0 16px; }
     h1 { margin:0 0 10px; font-size:42px; }
     .muted { color:#6b7280; font-size:15px; }
+
+    /* Tiles */
     .grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); margin-top:18px; }
     .tile { display:block; padding:18px; border-radius:16px; background:#fff; border:1px solid #e5e7eb; text-decoration:none; color:#111; box-shadow:0 6px 18px rgba(0,0,0,.05); transition:transform .15s ease, box-shadow .15s ease; position:relative; }
     .tile h3 { margin:0 0 6px; font-size:22px; }
     .tile:hover { transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.08); }
+
+    /* Dark mode */
     .dark { background:#0b1220; color:#e5e7eb; }
     .dark .tile { background:#0f172a; border-color:#1f2937; color:#e5e7eb; }
     .dark .muted { color:#a3aed0; }
+
+    /* Gear */
     #settings { position:fixed; top:14px; right:14px; z-index:50; }
     #gear { border:1px solid #e5e7eb; border-radius:12px; padding:10px; background:#fff; box-shadow:0 6px 18px rgba(0,0,0,.06); cursor:pointer; transition:transform .1s ease; }
     #gear:hover { transform:scale(1.05); }
     .dark #gear { background:#0f172a; border-color:#1f2937; color:#e5e7eb; }
-    .madeby { position:absolute; top:10px; right:12px; font-size:12px; line-height:1; padding:4px 8px; background:#eef2ff; color:#1f2937; border:1px solid #e5e7eb; border-radius:999px; user-select:none; }
-    .dark .madeby { background:#1f2937; color:#e5e7eb; border-color:#374151; }
+
+    /* Footer credit */
+    .credit{color:#6b7280;text-decoration:none;border-bottom:1px dotted #cbd5e1}
+    .credit:hover{color:#111;border-bottom-color:#94a3b8}
+    .dark .credit{color:#a3aed0}
+    .dark .credit:hover{color:#e5e7eb}
   </style>
 </head>
 <body>
-  <div id="settings"><button id="gear" aria-label="Toggle dark mode">⚙️</button></div>
+
+  <!-- SETTINGS: gear toggles dark mode -->
+  <div id="settings">
+    <button id="gear" aria-label="Toggle dark mode">⚙️</button>
+  </div>
 
   <div class="wrap">
     <h1>DGCC Operations Portal</h1>
     <p class="muted">Your internal tools in one place</p>
 
     <div class="grid">
+      <!-- Follow-up -->
       <a class="tile" href="https://dgcc-followup.streamlit.app/">
         <h3>DGCC Follow-up</h3>
         <div class="muted">Case tracking & quick notes.</div>
       </a>
+
+      <!-- OPD -->
       <a class="tile" href="./opd/">
         <h3>OPD</h3>
         <div class="muted">Open the data utility.</div>
       </a>
-      <a class="tile" href="#"><h3>Scheduling Hub</h3><div class="muted">Coming soon</div></a>
-      <a class="tile" href="#"><h3>Analytics</h3><div class="muted">Coming soon</div></a>
-      <a class="tile" href="#"><h3>Reports</h3><div class="muted">Coming soon</div></a>
+
+      <!-- Scheduling (placeholder) -->
+      <a class="tile" href="#">
+        <h3>Scheduling Hub</h3>
+        <div class="muted">Coming soon</div>
+      </a>
+
+      <!-- Analytics (placeholder) -->
+      <a class="tile" href="#">
+        <h3>Analytics</h3>
+        <div class="muted">Coming soon</div>
+      </a>
+
+      <!-- Reports (placeholder) -->
+      <a class="tile" href="#">
+        <h3>Reports</h3>
+        <div class="muted">Coming soon</div>
+      </a>
     </div>
 
-    <p class="muted">© DGCC</p>
+    <p class="muted">© DGCC ·
+      <a class="credit" href="https://github.com/noa785/ODU">GitHub — Created by Nora-Aldossari</a>
+    </p>
   </div>
 
   <script>
+    // Dark mode toggle + persistence
     (function () {
       const key = "dgcc-theme";
       const stored = localStorage.getItem(key);
@@ -63,6 +101,7 @@
       });
     })();
 
+    // Ensure same-tab navigation even if extensions try to force new tabs
     (function () {
       document.querySelectorAll('a.tile').forEach(a => {
         a.removeAttribute('target'); a.removeAttribute('rel');
@@ -71,17 +110,6 @@
             e.preventDefault(); window.location.href = a.href;
           }
         });
-      });
-    })();
-
-    (function () {
-      document.querySelectorAll('a.tile').forEach(a => {
-        if (!a.querySelector('.madeby')) {
-          const b = document.createElement('span');
-          b.className = 'madeby';
-          b.textContent = 'GitHub — Created by Nora-Aldossari';
-          a.appendChild(b);
-        }
       });
     })();
   </script>
