@@ -13,6 +13,24 @@
     .muted{color:#6b7280;font-size:15px}
   </style>
 </head>
+  <script>
+  // Force all OPD cards to open in the same tab
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a.card').forEach(a => {
+      // Remove any leftover target attr just in case
+      a.removeAttribute('target');
+      a.removeAttribute('rel');
+      // Intercept left-click and navigate in-place
+      a.addEventListener('click', (e) => {
+        // Only handle normal left-click (no ctrl/cmd/shift)
+        if (!e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
+          e.preventDefault();
+          window.location.href = a.href;
+        }
+      });
+    });
+  });
+</script>
 <body>
   <div class="wrap">
     <h1>OPD</h1>
